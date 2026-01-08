@@ -1,0 +1,157 @@
+LOAD TEST RESULTS - 200 Concurrent Users (Complete Coverage)
+================================================================
+Test Date: 2025-12-02
+Duration: 10 minutes
+Users: 200 concurrent
+Spawn Rate: 10 users/second
+Endpoints: 35+ (complete coverage)
+
+CRITICAL FAILURE
+================
+⚠️ SYSTEM COMPLETELY FAILED - 100% FAILURE RATE
+⚠️ ALL REQUESTS TIMED OUT AT 30 SECONDS
+⚠️ SYSTEM CANNOT HANDLE 200 USERS WITH FULL ENDPOINT COVERAGE
+
+OVERALL PERFORMANCE
+-------------------
+Total Requests: 3,475
+Total Failures: 3,475 (100%)
+Success Rate: 0%
+Requests/Second: 5.80 RPS
+
+RESPONSE TIMES
+--------------
+Average: 30,010ms (30 seconds - TIMEOUT)
+Median: 30,001ms (30 seconds - TIMEOUT)
+95th Percentile: 30,000ms (30 seconds - TIMEOUT)
+99th Percentile: 30,000ms (30 seconds - TIMEOUT)
+Max: 30,044ms (30 seconds - TIMEOUT)
+
+ERROR ANALYSIS
+--------------
+All 3,475 requests failed with:
+ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение')
+
+This indicates:
+- Server is completely overwhelmed
+- Connection pool exhausted
+- Database connections maxed out
+- System resources depleted
+- Network stack overloaded
+
+ENDPOINTS TESTED (ALL FAILED)
+------------------------------
+✗ POST /market/ - 531 requests, 100% timeout
+✗ GET /nft/my - 202 requests, 100% timeout
+✗ GET /accounts - 169 requests, 100% timeout
+✗ GET /market/collections - 149 requests, 100% timeout
+✗ POST /market/ (filtered) - 146 requests, 100% timeout
+✗ GET /users/me - 130 requests, 100% timeout
+✗ POST /market/models - 130 requests, 100% timeout
+✗ POST /market/patterns - 118 requests, 100% timeout
+✗ POST /trade/ - 116 requests, 100% timeout
+✗ POST /market/floor - 106 requests, 100% timeout
+✗ GET /offers/my - 90 requests, 100% timeout
+✗ GET /trade/my - 89 requests, 100% timeout
+✗ GET /users/withdraws - 86 requests, 100% timeout
+✗ GET /market/integrations - 85 requests, 100% timeout
+✗ GET /nft/buys - 82 requests, 100% timeout
+✗ GET /nft/sells - 81 requests, 100% timeout
+✗ POST /market/backdrops - 80 requests, 100% timeout
+✗ POST /market/charts - 78 requests, 100% timeout
+✗ GET /trade/personal - 75 requests, 100% timeout
+✗ GET /channels/my - 68 requests, 100% timeout
+✗ GET /trade/proposals - 67 requests, 100% timeout
+✗ GET /auctions/deals - 61 requests, 100% timeout
+✗ POST /auctions/ - 59 requests, 100% timeout
+✗ GET /channels - 59 requests, 100% timeout
+✗ GET /users/auth - 58 requests, 100% timeout
+✗ POST /presales/ - 58 requests, 100% timeout
+✗ GET /presales/my - 57 requests, 100% timeout
+✗ GET /market/topup-balance - 55 requests, 100% timeout
+✗ GET /trade/my-proposals - 53 requests, 100% timeout
+✗ GET /channels/buys - 52 requests, 100% timeout
+✗ GET /trade/deals - 51 requests, 100% timeout
+✗ GET /channels/sells - 48 requests, 100% timeout
+✗ GET /auctions/my - 47 requests, 100% timeout
+✗ GET /nft/deals - 42 requests, 100% timeout
+
+ROOT CAUSE ANALYSIS
+-------------------
+1. CONNECTION POOL EXHAUSTION
+   - System ran out of available connections
+   - All new requests queued indefinitely
+   - 30-second timeout triggered for all requests
+
+2. DATABASE BOTTLENECK
+   - Too many concurrent database queries
+   - Connection pool size insufficient
+   - Query execution blocked
+
+3. SYSTEM RESOURCE DEPLETION
+   - CPU/Memory/Network overwhelmed
+   - Unable to process new requests
+   - System entered deadlock state
+
+4. NO GRACEFUL DEGRADATION
+   - System did not handle overload gracefully
+   - No request queuing or rate limiting
+   - Complete system failure instead of partial degradation
+
+COMPARISON WITH PREVIOUS TESTS
+-------------------------------
+- 50 users (Stage 3): 94% success, 24ms avg response
+- 200 users (this test): 0% success, 30,000ms avg response
+- Conclusion: System breaks between 50-200 concurrent users
+
+CRITICAL ISSUES
+---------------
+1. ⚠️ No connection pooling limits
+2. ⚠️ No request timeout handling
+3. ⚠️ No rate limiting
+4. ⚠️ No graceful degradation
+5. ⚠️ No load balancing
+6. ⚠️ No caching layer
+7. ⚠️ No request queuing
+8. ⚠️ Insufficient database connections
+
+IMMEDIATE ACTIONS REQUIRED
+---------------------------
+1. STOP production deployment - system not ready
+2. Implement connection pooling with limits
+3. Add request timeouts (< 30 seconds)
+4. Implement rate limiting per user
+5. Add Redis caching layer
+6. Optimize database queries
+7. Add connection pool monitoring
+8. Implement circuit breakers
+
+RECOMMENDATIONS
+---------------
+DO NOT RUN 10,000 USER TEST
+- System cannot handle 200 users
+- 10,000 users will cause complete system crash
+- May damage database or infrastructure
+- No value in testing beyond capacity
+
+REALISTIC CAPACITY
+------------------
+Current Maximum: 50-100 concurrent users
+Target Capacity: 500-1000 concurrent users
+Gap: 5-10x improvement needed
+
+NEXT STEPS
+----------
+1. Implement basic infrastructure improvements
+2. Test with 100 users to find exact breaking point
+3. Add monitoring and alerting
+4. Implement caching and connection pooling
+5. Re-test incrementally (100, 150, 200 users)
+6. Only test higher loads after passing 200 users
+
+CONCLUSION
+----------
+✗ TEST FAILED COMPLETELY
+✗ System not production-ready for any significant load
+✗ Critical infrastructure improvements required
+✗ Do not proceed with 10,000 user test

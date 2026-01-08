@@ -1,0 +1,22 @@
+========================================
+LOAD TEST RESULTS - PostgreSQL 50 Users
+========================================
+
+Test Configuration:
+- Users: 50 concurrent
+- Spawn Rate: 5 users/sec
+- Duration: 5 minutes
+- Host: http://127.0.0.1:8001
+- Database: PostgreSQL 16
+
+CRITICAL ISSUE FOUND:
+- 100% failure rate
+- All requests timeout at 30 seconds
+- Application not responding to API requests
+- Only health checks working
+
+Root Cause:
+- Locust was using localhost instead of 127.0.0.1
+- Windows IPv6 resolution issue
+
+Status: RETRYING with correct host configuration

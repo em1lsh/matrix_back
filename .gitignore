@@ -1,0 +1,33 @@
+# python & build
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.mypy_cache/
+.pytest_cache/
+.venv/
+
+# локальные данные/сессии/медиа
+*.session
+test.db
+/db_data/
+/redis_data/
+
+# инстуркции
+/.kiro
+/.idea
+
+# окружения/настройки
+.env
+.env.*
+!/.env.example
+config.env
+
+# TON wallet files (NEVER COMMIT!)
+*wallet*.txt
+test_wallet.txt
+mainnet_wallet.txt
+
+# vcs
+.git

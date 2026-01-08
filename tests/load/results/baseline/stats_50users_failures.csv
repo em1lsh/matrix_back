@@ -1,0 +1,10 @@
+Method,Name,Error,Occurrences
+POST,POST /api/market/ (list items),HTTPError('404 Client Error: Not Found for url: POST /api/market/ (list items)'),4908
+GET,GET /health,HTTPError('403 Client Error: Forbidden for url: GET /health'),492
+POST,POST /api/market/patterns,HTTPError('404 Client Error: Not Found for url: POST /api/market/patterns'),1510
+GET,GET /api/market/collections,HTTPError('404 Client Error: Not Found for url: GET /api/market/collections'),1483
+GET,GET /api/accounts/gifts,HTTPError('404 Client Error: Not Found for url: GET /api/accounts/gifts'),977
+POST,POST /api/market/models,HTTPError('404 Client Error: Not Found for url: POST /api/market/models'),1498
+GET,GET /api/accounts,HTTPError('404 Client Error: Not Found for url: GET /api/accounts'),2526
+GET,GET /api/market/integrations,HTTPError('404 Client Error: Not Found for url: GET /api/market/integrations'),481
+POST,POST /api/market/backdrops,HTTPError('404 Client Error: Not Found for url: POST /api/market/backdrops'),1001

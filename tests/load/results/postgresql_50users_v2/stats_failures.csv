@@ -1,0 +1,8 @@
+Method,Name,Error,Occurrences
+POST,POST /market/floor,HTTPError('500 Server Error: Internal Server Error for url: POST /market/floor'),251
+GET,GET /offers/my,HTTPError('500 Server Error: Internal Server Error for url: GET /offers/my'),185
+GET,GET /users/me,HTTPError('500 Server Error: Internal Server Error for url: GET /users/me'),159
+GET,GET /accounts,HTTPError('500 Server Error: Internal Server Error for url: GET /accounts'),45
+GET,GET /users/balance-topups,HTTPError('404 Client Error: Not Found for url: GET /users/balance-topups'),83
+POST,POST /auctions/ (list),HTTPError('500 Server Error: Internal Server Error for url: POST /auctions/ (list)'),82
+POST,POST /presale/ (list),HTTPError('404 Client Error: Not Found for url: POST /presale/ (list)'),96

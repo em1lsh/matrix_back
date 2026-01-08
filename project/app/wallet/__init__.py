@@ -1,0 +1,1 @@
+from .wallet import TonWallet

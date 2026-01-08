@@ -1,0 +1,5 @@
+Method,Name,Error,Occurrences
+GET,GET /nft/my,CatchResponseError('Status: 500'),292
+POST,POST /auctions/,CatchResponseError('Status: 500'),174
+POST,POST /market/,CatchResponseError('Status: 500'),514
+POST,POST /presales/,CatchResponseError('Status: 500'),104

@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.mypy_cache/
+.pytest_cache/
+.git
+.gitignore
+.env.*
+!/.env.example
+config.env
+.venv/
+project/test.db
+*.session
+test.db
+project/requirements.txt

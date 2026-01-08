@@ -1,0 +1,39 @@
+========================================
+PRE-FLIGHT CHECKLIST
+========================================
+
+Before running load tests, verify:
+
+[ ] Docker Desktop is running
+    > docker --version
+
+[ ] Poetry is installed
+    > poetry --version
+
+[ ] Dependencies are installed
+    > cd backend
+    > poetry install
+
+[ ] Ports are available:
+    > netstat -an | findstr "8001 3307 6380"
+    (Should show nothing - ports must be free)
+
+[ ] .env.test file exists
+    > dir .env.test
+    (Should exist in backend/ directory)
+
+[ ] No test containers running
+    > docker ps | findstr "test"
+    (Should show nothing)
+
+========================================
+READY TO START!
+========================================
+
+Run baseline test:
+> tests\load\run_baseline_test.bat
+
+Expected duration: ~30 minutes
+Expected output: HTML reports + CSV stats in tests\load\results\baseline\
+
+========================================

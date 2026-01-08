@@ -1,0 +1,47 @@
+SYSTEM METRICS - Production Load Test
+======================================
+Test: 10,000 concurrent users, 5 minutes
+
+CONTAINER METRICS (After Test)
+-------------------------------
+Container: backend-app-test-1
+CPU Usage: 2.09%
+Memory Usage: 231.1 MiB / 15.54 GiB (1.45%)
+Network I/O: 231 MB received / 243 MB sent
+Block I/O: 0B / 0B
+
+OBSERVATIONS
+------------
+✓ CPU usage low after test (2.09%)
+✓ Memory usage reasonable (231 MB)
+✓ Network throughput: ~474 MB total
+✗ High CPU during test (warning issued by Locust)
+
+RESOURCE ANALYSIS
+-----------------
+- Application not CPU-bound (2% usage after test)
+- Memory footprint acceptable (231 MB)
+- Network handled 474 MB of traffic
+- Connection pool likely the bottleneck
+- Database connections may be limiting factor
+
+BOTTLENECK IDENTIFICATION
+-------------------------
+Primary Bottleneck: Connection Pool Exhaustion
+- 96% failure rate with ConnectionAbortedError
+- System resources (CPU/Memory) not maxed out
+- Network bandwidth sufficient
+- Likely database connection limit reached
+
+Secondary Issues:
+- Locust client machine CPU overload
+- Single machine generating 10,000 users
+- Connection handling in application
+
+RECOMMENDATIONS
+---------------
+1. Increase database connection pool size
+2. Implement connection pooling optimization
+3. Use distributed Locust testing (multiple workers)
+4. Add connection timeout configuration
+5. Monitor database connection metrics

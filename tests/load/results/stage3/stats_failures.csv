@@ -1,0 +1,11 @@
+Method,Name,Error,Occurrences
+GET,GET /offers/my,HTTPError('500 Server Error: Internal Server Error for url: GET /offers/my'),89
+GET,GET /trade/my-proposals,HTTPError('500 Server Error: Internal Server Error for url: GET /trade/my-proposals'),39
+GET,GET /health,HTTPError('403 Client Error: Forbidden for url: GET /health'),42
+POST,POST /trade/ (list),HTTPError('500 Server Error: Internal Server Error for url: POST /trade/ (list)'),131
+GET,GET /trade/proposals,HTTPError('500 Server Error: Internal Server Error for url: GET /trade/proposals'),45
+GET,GET /trade/personal,HTTPError('500 Server Error: Internal Server Error for url: GET /trade/personal'),40
+GET,GET /users/balance-topups,HTTPError('404 Client Error: Not Found for url: GET /users/balance-topups'),33
+GET,GET /trade/my,HTTPError('500 Server Error: Internal Server Error for url: GET /trade/my'),78
+POST,POST /auctions/ (list),HTTPError('500 Server Error: Internal Server Error for url: POST /auctions/ (list)'),54
+POST,POST /presale/ (list),HTTPError('404 Client Error: Not Found for url: POST /presale/ (list)'),39

@@ -1,0 +1,36 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-1.6.0 -- D:\Poetry\virtualenvs\backend-ocGZaqk2-py3.11\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\CGcorp\matrix\backend
+plugins: anyio-4.11.0, asyncio-0.21.2, cov-4.1.0
+asyncio: mode=Mode.STRICT
+collecting ... collected 26 items
+
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_get_salings_basic PASSED [  3%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_get_salings_with_filters PASSED [  7%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_get_salings_pagination PASSED [ 11%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_get_collections PASSED [ 15%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_get_models_filter PASSED [ 19%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_get_patterns_filter PASSED [ 23%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_get_backdrops_filter PASSED [ 26%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_topup_balance PASSED [ 30%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_output_insufficient_balance PASSED [ 34%]
+tests/test_heavy_endpoints.py::TestMarketEndpoints::test_output_idempotency PASSED [ 38%]
+tests/test_heavy_endpoints.py::TestAccountsEndpoints::test_get_accounts PASSED [ 42%]
+tests/test_heavy_endpoints.py::TestAccountsEndpoints::test_delete_account PASSED [ 46%]
+tests/test_heavy_endpoints.py::TestAccountsEndpoints::test_delete_account_not_found PASSED [ 50%]
+tests/test_heavy_endpoints.py::TestChannelsEndpoints::test_get_sale_channels PASSED [ 53%]
+tests/test_heavy_endpoints.py::TestChannelsEndpoints::test_get_my_channels PASSED [ 57%]
+tests/test_heavy_endpoints.py::TestChannelsEndpoints::test_get_buys PASSED [ 61%]
+tests/test_heavy_endpoints.py::TestChannelsEndpoints::test_get_sells PASSED [ 65%]
+tests/test_heavy_endpoints.py::TestChannelsEndpoints::test_set_price PASSED [ 69%]
+tests/test_heavy_endpoints.py::TestChannelsEndpoints::test_set_price_new_account_error PASSED [ 73%]
+tests/test_heavy_endpoints.py::TestChannelsEndpoints::test_delete_channel PASSED [ 76%]
+tests/test_heavy_endpoints.py::TestAuctionsEndpoints::test_get_auctions PASSED [ 80%]
+tests/test_heavy_endpoints.py::TestAuctionsEndpoints::test_get_my_auctions PASSED [ 84%]
+tests/test_heavy_endpoints.py::TestAuctionsEndpoints::test_new_auction PASSED [ 88%]
+tests/test_heavy_endpoints.py::TestAuctionsEndpoints::test_new_auction_nft_already_on_sale PASSED [ 92%]
+tests/test_heavy_endpoints.py::TestAuctionsEndpoints::test_delete_auction PASSED [ 96%]
+tests/test_heavy_endpoints.py::TestAuctionsEndpoints::test_get_deals PASSED [100%]
+
+============================= 26 passed in 6.18s ==============================

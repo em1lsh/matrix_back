@@ -1,0 +1,86 @@
+========================================
+LOAD TESTING - STAGE 2: WORKING ENDPOINTS
+========================================
+
+Goal: Measure real performance with functional endpoints
+Expected: 200/201/204 responses, no 404 errors
+
+Test Configuration:
+- Users: 50 concurrent
+- Spawn Rate: 5 users/sec
+- Duration: 10 minutes
+- Host: http://localhost:8001
+
+Endpoints Tested:
+- POST /market/ - Get market items (with filters, pagination)
+- GET /accounts - Get user accounts
+- GET /health - Health check (requires different auth)
+
+Database:
+- 1,000 users with valid tokens
+- 100 accounts
+- 50 gifts
+- 500 NFTs on market
+- 3 markets (mrkt, portals, tonnel)
+
+Infrastructure:
+- MySQL 8 (test DB)
+- Redis 7 (cache)
+- FastAPI + Uvicorn
+
+========================================
+RESULTS
+========================================
+
+Total Requests: 14,588
+Successful: 13,666 (93.7%)
+Failed: 922 (6.3% - only /health endpoint with 403)
+
+Performance Metrics:
+- RPS: 24.32 requests/second
+- Average Response Time: 36.67ms
+- Median: 51ms
+- 95th Percentile: 62ms
+- 99th Percentile: 69ms
+- Max: 257ms
+
+Endpoint Breakdown:
+1. POST /market/ (list items)
+   - Requests: 9,064
+   - Success Rate: 100%
+   - Avg Response: 55ms
+   - This is the main market endpoint with filters
+
+2. GET /accounts
+   - Requests: 4,602
+   - Success Rate: 100%
+   - Avg Response: 7ms
+   - Fast, simple query
+
+3. GET /health
+   - Requests: 922
+   - Success Rate: 0% (403 Forbidden)
+   - Requires different auth mechanism
+   - Not critical for load testing
+
+========================================
+ANALYSIS
+========================================
+
+✅ SUCCESS: Real endpoints working with 200 responses
+✅ Performance: ~24 RPS stable over 10 minutes
+✅ Response Times: Excellent (99% under 70ms)
+✅ No crashes or timeouts
+✅ Database queries working correctly
+
+Key Findings:
+- Market endpoint handles complex queries well (55ms avg)
+- Simple endpoints very fast (7ms for accounts)
+- System stable under sustained load
+- Redis caching likely helping performance
+
+Next Steps (Stage 3):
+- Increase load to find limits (100, 200, 500 users)
+- Add more complex scenarios
+- Monitor resource usage (CPU, memory, DB connections)
+- Test with cache warming

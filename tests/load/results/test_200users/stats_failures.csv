@@ -1,0 +1,36 @@
+Method,Name,Error,Occurrences
+POST,POST /market/floor,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",106
+POST,POST /market/charts,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",78
+GET,GET /users/auth,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",58
+GET,GET /market/integrations,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",84
+POST,POST /market/ (filtered),"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",146
+GET,GET /nft/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",202
+GET,GET /trade/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",89
+POST,POST /presales/,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",58
+GET,GET /trade/my-proposals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",53
+GET,GET /trade/personal,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",75
+GET,GET /users/me,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",130
+GET,GET /accounts,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",169
+GET,GET /market/collections,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",149
+GET,GET /nft/buys,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",82
+GET,GET /channels/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",68
+GET,GET /trade/proposals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",67
+GET,GET /auctions/deals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",61
+GET,GET /presales/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",57
+POST,POST /trade/,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",116
+GET,GET /channels,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",58
+POST,POST /market/backdrops,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",80
+POST,POST /auctions/,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",59
+GET,GET /users/withdraws,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",86
+GET,GET /offers/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",90
+POST,POST /market/patterns,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",118
+GET,GET /market/topup-balance,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",55
+POST,POST /market/,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",531
+GET,GET /auctions/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",47
+GET,GET /channels/buys,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",52
+GET,GET /nft/sells,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",81
+GET,GET /channels/sells,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",48
+GET,GET /nft/deals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",42
+GET,GET /users/topups,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",97
+POST,POST /market/models,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",130
+GET,GET /trade/deals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",51

@@ -1,0 +1,99 @@
+STAGE 3 LOAD TEST RESULTS - Extended Endpoints Coverage
+========================================================
+Test Date: 2025-12-02
+Duration: 2 minutes (full test) + 30 seconds (quick test after fix)
+Users: 50 concurrent (full), 20 concurrent (quick)
+
+FULL TEST RESULTS (Before Fix)
+===============================
+Total Requests: 2,874
+Total Failures: 593 (20.63%)
+Success Rate: 79.37%
+Requests/Second: 24.05 RPS
+Response Times: Avg 24ms, Median 10ms, 95th 60ms, 99th 67ms
+
+QUICK TEST RESULTS (After Fix)
+===============================
+Total Requests: 284
+Total Failures: 17 (5.99%)
+Success Rate: 94.01%
+Requests/Second: 9.64 RPS
+Response Times: Avg 22ms, Median 6ms, 95th 56ms, 99th 65ms
+
+ENDPOINTS TESTED (26 total)
+----------------------------
+✓ GET /accounts - 100% success
+✓ GET /market/collections - 100% success
+✓ POST /market/ (list items) - 100% success
+✓ POST /market/ (with filters) - 100% success
+✓ POST /market/models - 100% success
+✓ POST /market/patterns - 100% success
+✓ POST /market/backdrops - 100% success
+✓ GET /market/integrations - 100% success
+✓ GET /nft/my - 100% success
+✓ GET /nft/buys - 100% success
+✓ GET /nft/sells - 100% success
+✓ GET /nft/deals - 100% success
+✓ GET /auctions/deals - 100% success
+✓ GET /auctions/my - 100% success
+✓ GET /trade/deals - 100% success
+✓ GET /trade/my - 100% success (FIXED!)
+✓ GET /trade/personal - 100% success (FIXED!)
+✓ GET /trade/my-proposals - 100% success (FIXED!)
+✓ GET /trade/proposals - 100% success (FIXED!)
+✓ POST /trade/ (list) - 100% success (FIXED!)
+✓ GET /users/me - 100% success
+
+✗ GET /offers/my - 100% failures (500 error) - Needs nft_orders data
+✗ POST /auctions/ (list) - 100% failures (500 error) - Needs auction data
+✗ POST /presale/ (list) - 100% failures (404 error) - Endpoint doesn't exist
+✗ GET /users/balance-topups - 100% failures (404 error) - Endpoint doesn't exist
+✗ GET /health - 100% failures (403 error) - Requires different auth
+
+ISSUES FIXED
+------------
+1. ✓ FIXED: nft_orders table missing - Added to schema
+2. ✓ FIXED: trade_requirements missing created_at column - Added to schema
+3. ✓ FIXED: Trade endpoints now working - Schema fix resolved the issue
+
+REMAINING ISSUES
+----------------
+1. Offers endpoint - Needs seed data in nft_orders table
+2. Auctions listing - Needs seed data in auctions table
+3. Presale endpoint - Should be removed from tests (doesn't exist)
+4. Balance topups endpoint - Should be removed from tests (doesn't exist)
+5. Health endpoint - Requires different authentication
+
+PERFORMANCE ANALYSIS
+--------------------
+✓ Response times excellent (<70ms for 99% of requests)
+✓ System handles 24 RPS with 50 concurrent users
+✓ No database connection issues
+✓ Core market functionality stable
+✓ Trade functionality now working after schema fix
+✓ 94% success rate after fixing schema issues
+
+SCHEMA IMPROVEMENTS
+-------------------
+Added the following tables to init_schema.sql:
+- nft_orders (NFT offers)
+- nft_deals (NFT purchase history)
+- trades (Trade listings)
+- trade_nfts (Trade-NFT relationships)
+- trade_requirements (Trade requirements)
+- trade_applications (Trade proposals)
+- trade_application_nfts (Proposal-NFT relationships)
+- trade_deals (Trade history)
+- trade_deal_sended_gifts (Trade sent gifts)
+- trade_deal_gived_gifts (Trade received gifts)
+- auctions (Auction listings)
+- auction_bids (Auction bids)
+- auction_deals (Auction history)
+
+NEXT STEPS
+----------
+1. Add seed data for offers (nft_orders table)
+2. Add seed data for auctions
+3. Remove non-existent endpoints from tests (presale, balance-topups)
+4. Update health endpoint test to use correct auth
+5. Run full stress test with all working endpoints

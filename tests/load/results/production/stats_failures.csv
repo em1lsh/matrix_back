@@ -1,0 +1,74 @@
+Method,Name,Error,Occurrences
+POST,POST /market/floor,HTTPError('500 Server Error: Internal Server Error for url: POST /market/floor'),281
+POST,POST /market/floor,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",682
+GET,GET /trade/proposals,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",1894
+POST,POST /market/charts,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",429
+GET,GET /users/topups,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",3961
+POST,POST /presale/ (list),"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",1978
+GET,GET /market/integrations,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",417
+POST,POST /market/models,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",6077
+GET,GET /nft/my,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",11965
+GET,GET /nft/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",1293
+GET,GET /trade/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",452
+POST,POST /market/ (with filters),"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",10004
+GET,GET /auctions/deals,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",1954
+GET,GET /offers/my,HTTPError('500 Server Error: Internal Server Error for url: GET /offers/my'),192
+GET,GET /trade/my-proposals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",250
+POST,POST /presale/ (list),"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",225
+GET,GET /market/collections,RemoteDisconnected('Remote end closed connection without response'),1
+GET,GET /market/integrations,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",4030
+GET,GET /market/collections,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",7972
+GET,GET /trade/personal,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",1931
+GET,GET /auctions/my,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",2013
+GET,GET /nft/deals,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",2018
+GET,GET /trade/personal,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",234
+POST,POST /market/charts,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",3894
+GET,GET /users/me,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",467
+GET,GET /accounts,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",1810
+POST,POST /market/ (list items),"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",29968
+GET,GET /market/collections,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",912
+GET,GET /nft/buys,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",469
+POST,POST /market/backdrops,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",3940
+GET,GET /trade/proposals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",214
+GET,GET /auctions/deals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",231
+GET,GET /presales/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",221
+GET,GET /trade/deals,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",1953
+GET,GET /nft/buys,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",3991
+POST,POST /auctions/ (list),"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",2013
+POST,POST /market/backdrops,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",463
+POST,POST /market/ (with filters),RemoteDisconnected('Remote end closed connection without response'),1
+POST,POST /market/ (with filters),"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",1174
+GET,GET /market/topup-balance,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",2004
+GET,GET /nft/sells,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",3930
+GET,GET /users/withdraws,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",3923
+GET,GET /accounts,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",15882
+GET,GET /users/balance-topups,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",2012
+GET,GET /users/withdraws,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",437
+GET,GET /trade/my-proposals,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",1950
+POST,POST /presales/ (list),"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",2009
+GET,GET /offers/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",455
+POST,POST /trade/ (list),"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",5931
+POST,POST /auctions/ (list),"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",214
+GET,GET /offers/my,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",3891
+POST,POST /market/patterns,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",672
+GET,GET /market/topup-balance,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",258
+POST,POST /trade/ (list),"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",601
+GET,GET /users/me,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",4015
+GET,GET /auctions/my,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",210
+POST,POST /market/ (list items),RemoteDisconnected('Remote end closed connection without response'),1
+GET,GET /users/balance-topups,HTTPError('404 Client Error: Not Found for url: GET /users/balance-topups'),86
+GET,GET /nft/sells,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",462
+POST,POST /market/patterns,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",5901
+GET,GET /nft/deals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",223
+POST,POST /market/ (list items),"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",3395
+GET,GET /users/balance-topups,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",231
+GET,GET /users/topups,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",430
+POST,POST /presales/ (list),"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",213
+GET,GET /trade/my,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",3979
+POST,POST /market/floor,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",5867
+POST,POST /auctions/ (list),HTTPError('500 Server Error: Internal Server Error for url: POST /auctions/ (list)'),99
+GET,GET /presales/my,"ConnectionAbortedError(10053, 'Программа на вашем хост-компьютере разорвала установленное подключение', None, 10053, None)",1907
+POST,POST /presale/ (list),HTTPError('404 Client Error: Not Found for url: POST /presale/ (list)'),92
+POST,POST /market/models,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",667
+GET,GET /trade/deals,"ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)",234
+POST,POST /market/charts,RemoteDisconnected('Remote end closed connection without response'),1

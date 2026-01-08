@@ -1,0 +1,37 @@
+Method,Name,Error,Occurrences
+GET,GET /nft/sells,HTTPError('403 Client Error: Forbidden for url: GET /nft/sells'),11
+POST,POST /market/floor,HTTPError('500 Server Error: Internal Server Error for url: POST /market/floor'),243
+POST,POST /auctions/ (list),HTTPError('403 Client Error: Forbidden for url: POST /auctions/ (list)'),6
+GET,GET /market/collections,HTTPError('403 Client Error: Forbidden for url: GET /market/collections'),30
+GET,GET /trade/personal,HTTPError('403 Client Error: Forbidden for url: GET /trade/personal'),8
+GET,GET /auctions/deals,HTTPError('403 Client Error: Forbidden for url: GET /auctions/deals'),7
+GET,GET /presales/my,HTTPError('403 Client Error: Forbidden for url: GET /presales/my'),6
+GET,GET /offers/my,HTTPError('500 Server Error: Internal Server Error for url: GET /offers/my'),164
+GET,GET /market/integrations,HTTPError('403 Client Error: Forbidden for url: GET /market/integrations'),10
+GET,GET /trade/deals,HTTPError('403 Client Error: Forbidden for url: GET /trade/deals'),9
+POST,POST /market/backdrops,HTTPError('403 Client Error: Forbidden for url: POST /market/backdrops'),21
+GET,GET /offers/my,HTTPError('403 Client Error: Forbidden for url: GET /offers/my'),18
+POST,POST /market/charts,HTTPError('403 Client Error: Forbidden for url: POST /market/charts'),15
+GET,GET /market/topup-balance,HTTPError('403 Client Error: Forbidden for url: GET /market/topup-balance'),7
+GET,GET /nft/deals,HTTPError('403 Client Error: Forbidden for url: GET /nft/deals'),5
+GET,GET /users/me,HTTPError('500 Server Error: Internal Server Error for url: GET /users/me'),179
+GET,GET /users/me,HTTPError('403 Client Error: Forbidden for url: GET /users/me'),11
+GET,GET /trade/proposals,HTTPError('403 Client Error: Forbidden for url: GET /trade/proposals'),4
+POST,POST /market/floor,HTTPError('403 Client Error: Forbidden for url: POST /market/floor'),31
+POST,POST /trade/ (list),HTTPError('403 Client Error: Forbidden for url: POST /trade/ (list)'),23
+GET,GET /trade/my-proposals,HTTPError('403 Client Error: Forbidden for url: GET /trade/my-proposals'),7
+GET,GET /nft/my,HTTPError('403 Client Error: Forbidden for url: GET /nft/my'),43
+GET,GET /auctions/my,HTTPError('403 Client Error: Forbidden for url: GET /auctions/my'),7
+GET,GET /trade/my,HTTPError('403 Client Error: Forbidden for url: GET /trade/my'),10
+GET,GET /users/topups,HTTPError('403 Client Error: Forbidden for url: GET /users/topups'),9
+GET,GET /users/withdraws,HTTPError('403 Client Error: Forbidden for url: GET /users/withdraws'),17
+GET,GET /accounts,HTTPError('403 Client Error: Forbidden for url: GET /accounts'),59
+POST,POST /market/ (list items),HTTPError('403 Client Error: Forbidden for url: POST /market/ (list items)'),104
+GET,GET /users/balance-topups,HTTPError('404 Client Error: Not Found for url: GET /users/balance-topups'),118
+POST,POST /market/models,HTTPError('403 Client Error: Forbidden for url: POST /market/models'),25
+POST,POST /market/patterns,HTTPError('403 Client Error: Forbidden for url: POST /market/patterns'),23
+POST,POST /market/ (with filters),HTTPError('403 Client Error: Forbidden for url: POST /market/ (with filters)'),31
+GET,GET /nft/buys,HTTPError('403 Client Error: Forbidden for url: GET /nft/buys'),13
+POST,POST /auctions/ (list),HTTPError('500 Server Error: Internal Server Error for url: POST /auctions/ (list)'),73
+POST,POST /presales/ (list),HTTPError('403 Client Error: Forbidden for url: POST /presales/ (list)'),8
+POST,POST /presale/ (list),HTTPError('404 Client Error: Not Found for url: POST /presale/ (list)'),73
