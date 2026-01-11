@@ -29,7 +29,6 @@ class FragmentIntegration:
 
     market_name = "fragment"
     base_url = "https://api.fragment-api.com/v1"
-    user_info_base_url = "https://fragment-api.com/api/v1"
 
     def __init__(self):
         self.logger = get_logger("FragmentAPI")
@@ -347,7 +346,7 @@ class FragmentIntegration:
         """
         Получить информацию о пользователе через Fragment API.
         
-        GET https://fragment-api.com/api/v1/user/{username}/
+        GET https://api.fragment-api.com/v1/misc/user/{username}/
         
         Args:
             username: Telegram username (без @)
@@ -361,7 +360,7 @@ class FragmentIntegration:
         try:
             response = await self._make_request(
                 method="GET",
-                url=f"{self.user_info_base_url}/user/{username}/"
+                url=f"{self.base_url}/misc/user/{username}/"
             )
             
             self.logger.info(
