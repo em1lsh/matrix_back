@@ -92,7 +92,11 @@ class FragmentIntegration:
                     
                     # Выбрасываем типизированное исключение
                     if error_code == 20:
-                        username = kwargs.get("json", {}).get("username", "unknown")
+                        username = (
+                            kwargs.get("json", {}).get("username")
+                            or kwargs.get("params", {}).get("username")
+                            or "unknown"
+                        )
                         raise FragmentUserNotFoundError(username)
                     elif error_code == 11:
                         raise FragmentKYCRequiredError()
@@ -132,6 +136,40 @@ class FragmentIntegration:
             
         except Exception as e:
             self.logger.error(f"Error calculating stars price: {e}")
+            raise
+
+    async def get_user_info(self, username: str) -> Dict[str, Any]:
+        """
+        Получить информацию о пользователе через Fragment API.
+        
+        GET https://api.fragment-api.com/v1/user/info/
+        
+        Args:
+            username: Telegram username (без @)
+            
+        Returns:
+            Dict с информацией о пользователе
+        """
+        if username.startswith("@"):
+            username = username[1:]
+        
+        try:
+            response = await self._make_request(
+                method="GET",
+                url=f"{self.base_url}/user/info/",
+                params={"username": username}
+            )
+            
+            self.logger.info(
+                "Fragment user info fetched",
+                extra={"username": username, "response": response}
+            )
+            return response
+        except Exception as e:
+            self.logger.error(
+                "Error fetching Fragment user info",
+                extra={"username": username, "error": str(e)}
+            )
             raise
 
     async def get_premium_price(self, months: int) -> Dict[str, Any]:

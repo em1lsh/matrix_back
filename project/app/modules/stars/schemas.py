@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional
 import re
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 
 
 class StarsPriceRequest(BaseModel):
@@ -80,6 +80,14 @@ class StarsPurchaseListResponse(BaseModel):
     limit: int
     offset: int
     has_more: bool
+
+
+class FragmentUserInfoResponse(BaseModel):
+    """Ответ Fragment с информацией о пользователе"""
+    model_config = ConfigDict(extra="allow")
+
+    success: Optional[bool] = Field(None, description="Успешность запроса")
+    username: Optional[str] = Field(None, description="Telegram username пользователя")
 
 
 # Premium Purchase схемы

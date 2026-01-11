@@ -144,6 +144,31 @@ class StarsService:
         
         return result
 
+    async def get_fragment_user_info(self, username: str) -> Dict[str, Any]:
+        """
+        Получить информацию о пользователе через Fragment API.
+        
+        Args:
+            username: Telegram username (без @)
+            
+        Returns:
+            Dict с информацией о пользователе
+        """
+        try:
+            result = await self.fragment.get_user_info(username)
+        except Exception as e:
+            logger.error(f"Error getting Fragment user info: {e}")
+            from app.shared.exceptions import AppException
+            if isinstance(e, AppException):
+                raise
+            raise FragmentAPIError(f"Failed to get user info: {str(e)}")
+        
+        if result.get("success") is False:
+            error_msg = result.get("error") or "Unknown error"
+            raise FragmentAPIError(f"Failed to get user info: {error_msg}")
+        
+        return result
+
     def calculate_profit(self, user_paid_nanotons: int, fragment_cost_ton: float) -> int:
         """
         Рассчитать прибыль маркета.
