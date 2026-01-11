@@ -29,6 +29,7 @@ class FragmentIntegration:
 
     market_name = "fragment"
     base_url = "https://api.fragment-api.com/v1"
+    user_info_base_url = "https://fragment-api.com/api/v1"
 
     def __init__(self):
         self.logger = get_logger("FragmentAPI")
@@ -49,9 +50,10 @@ class FragmentIntegration:
         return self.auth_token
 
     async def _make_request(
-        self, 
-        method: str, 
-        url: str, 
+        self,
+        method: str,
+        url: str,
+        expect_json: bool = True,
         **kwargs
     ) -> Dict[str, Any]:
         """Выполнить HTTP запрос к Fragment API"""
@@ -103,6 +105,23 @@ class FragmentIntegration:
                     else:
                         raise FragmentAPIError(f"Fragment API error: {response.status} - {error_text}")
                 
+                if not expect_json:
+                    return {"text": await response.text()}
+
+                content_type = response.headers.get("Content-Type", "")
+                if "application/json" not in content_type:
+                    error_text = await response.text()
+                    self.logger.error(
+                        "Fragment API unexpected content type",
+                        extra={
+                            "content_type": content_type,
+                            "body_preview": error_text[:200]
+                        }
+                    )
+                    raise FragmentAPIError(
+                        f"Unexpected response content-type: {content_type}. Body preview: {error_text[:200]}"
+                    )
+
                 return await response.json()
 
     async def get_stars_price(self, stars_amount: int) -> Dict[str, Any]:
@@ -328,7 +347,7 @@ class FragmentIntegration:
         """
         Получить информацию о пользователе через Fragment API.
         
-        GET https://api.fragment-api.com/v1/user/{username}/
+        GET https://fragment-api.com/api/v1/user/{username}/
         
         Args:
             username: Telegram username (без @)
@@ -342,7 +361,7 @@ class FragmentIntegration:
         try:
             response = await self._make_request(
                 method="GET",
-                url=f"{self.base_url}/user/{username}/"
+                url=f"{self.user_info_base_url}/user/{username}/"
             )
             
             self.logger.info(
