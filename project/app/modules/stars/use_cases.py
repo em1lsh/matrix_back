@@ -31,6 +31,19 @@ class GetStarsPriceUseCase:
         return StarsPriceResponse(**price_info)
 
 
+class GetFragmentUserInfoUseCase:
+    """UseCase: Получить информацию о пользователе через Fragment"""
+
+    def __init__(self, session: AsyncSession):
+        self.service = StarsService()
+
+    async def execute(self, username: str) -> FragmentUserInfoResponse:
+        """Получить информацию о пользователе через Fragment"""
+        normalized_username = self.service.validate_username(username)
+        user_info = await self.service.get_fragment_user_info(normalized_username)
+        return FragmentUserInfoResponse.model_validate(user_info)
+
+
 class BuyStarsUseCase:
     """UseCase: Купить звёзды"""
 
