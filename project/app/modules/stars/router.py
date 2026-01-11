@@ -86,6 +86,21 @@ async def get_premium_price(
     return await use_case.execute(months)
 
 
+@router.get("/user-info", response_model=FragmentUserInfoResponse)
+async def get_fragment_user_info(
+    username: str = Query(..., min_length=5, max_length=32, description="Telegram username (с @ или без)"),
+    session: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Получить информацию о пользователе через Fragment API.
+    
+    - **username**: Telegram username (с @ или без)
+    """
+    use_case = GetFragmentUserInfoUseCase(session)
+    return await use_case.execute(username)
+
+
 @router.post("/buy-premium", response_model=BuyPremiumResponse)
 async def buy_premium(
     request: BuyPremiumRequest,

@@ -323,3 +323,44 @@ class FragmentIntegration:
                 }
             )
             raise
+
+    async def get_user_info(self, username: str) -> Dict[str, Any]:
+        """
+        Получить информацию о пользователе через Fragment API.
+        
+        GET https://api.fragment-api.com/v1/user/{username}/
+        
+        Args:
+            username: Telegram username (без @)
+            
+        Returns:
+            Dict с информацией о пользователе
+        """
+        if username.startswith("@"):
+            username = username[1:]
+        
+        try:
+            response = await self._make_request(
+                method="GET",
+                url=f"{self.base_url}/user/{username}/"
+            )
+            
+            self.logger.info(
+                "Fragment user info received",
+                extra={
+                    "username": username,
+                    "response": response
+                }
+            )
+            
+            return response
+            
+        except Exception as e:
+            self.logger.error(
+                "Error getting Fragment user info",
+                extra={
+                    "username": username,
+                    "error": str(e)
+                }
+            )
+            raise
