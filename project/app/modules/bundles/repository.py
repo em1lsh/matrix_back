@@ -141,6 +141,92 @@ class BundleRepository:
 
         return items, total
 
+    async def list_user_bundles(self, seller_id: int, filter: BundleFilter) -> tuple[list[NFTBundle], int]:
+        query = select(NFTBundle).where(NFTBundle.seller_id == seller_id)
+        count_q = select(func.count()).select_from(NFTBundle).where(NFTBundle.seller_id == seller_id)
+
+        if filter.price_min is not None:
+            query = query.where(NFTBundle.price_nanotons >= int(filter.price_min * 1e9))
+            count_q = count_q.where(NFTBundle.price_nanotons >= int(filter.price_min * 1e9))
+        if filter.price_max is not None:
+            query = query.where(NFTBundle.price_nanotons <= int(filter.price_max * 1e9))
+            count_q = count_q.where(NFTBundle.price_nanotons <= int(filter.price_max * 1e9))
+
+        exists_conditions = []
+        if filter.titles:
+            exists_conditions.append(Gift.title.in_(filter.titles))
+        if filter.models:
+            exists_conditions.append(Gift.model_name.in_(filter.models))
+        if filter.patterns:
+            exists_conditions.append(Gift.pattern_name.in_(filter.patterns))
+        if filter.backdrops:
+            exists_conditions.append(Gift.backdrop_name.in_(filter.backdrops))
+        if filter.num is not None:
+            exists_conditions.append(Gift.num == filter.num)
+        if filter.num_min is not None:
+            exists_conditions.append(Gift.num >= filter.num_min)
+        if filter.num_max is not None:
+            exists_conditions.append(Gift.num <= filter.num_max)
+
+        if exists_conditions:
+            exists_subq = (
+                select(1)
+                .select_from(NFTBundleItem)
+                .join(NFT, NFT.id == NFTBundleItem.nft_id)
+                .join(Gift, Gift.id == NFT.gift_id)
+                .where(NFTBundleItem.bundle_id == NFTBundle.id, *exists_conditions)
+            )
+            query = query.where(exists(exists_subq))
+            count_q = count_q.where(exists(exists_subq))
+
+        total = await self.session.scalar(count_q) or 0
+
+        sort = filter.sort or "created_at/desc"
+        field, direction = sort.split("/")
+        is_asc = direction == "asc"
+
+        if field in {"num", "model_rarity", "pattern_rarity", "backdrop_rarity"}:
+            col = {
+                "num": Gift.num,
+                "model_rarity": Gift.model_rarity,
+                "pattern_rarity": Gift.pattern_rarity,
+                "backdrop_rarity": Gift.backdrop_rarity,
+            }[field]
+
+            agg_col = func.min(col) if is_asc else func.max(col)
+
+            agg_subq = (
+                select(NFTBundleItem.bundle_id.label("b_id"), agg_col.label("agg"))
+                .select_from(NFTBundleItem)
+                .join(NFT, NFT.id == NFTBundleItem.nft_id)
+                .join(Gift, Gift.id == NFT.gift_id)
+                .group_by(NFTBundleItem.bundle_id)
+                .subquery()
+            )
+
+            query = query.join(agg_subq, agg_subq.c.b_id == NFTBundle.id)
+
+            order_col = agg_subq.c.agg
+            query = query.order_by(asc(order_col) if is_asc else desc(order_col), desc(NFTBundle.id))
+        elif field == "price":
+            query = query.order_by(
+                asc(NFTBundle.price_nanotons) if is_asc else desc(NFTBundle.price_nanotons),
+                desc(NFTBundle.id),
+            )
+        else:
+            query = query.order_by(asc(NFTBundle.created_at) if is_asc else desc(NFTBundle.created_at), desc(NFTBundle.id))
+
+        query = query.options(
+            selectinload(NFTBundle.items).selectinload(NFTBundleItem.nft).selectinload(NFT.gift)
+        )
+
+        query = query.offset(filter.offset).limit(filter.limit)
+
+        result = await self.session.execute(query)
+        items = list(result.unique().scalars().all())
+
+        return items, total
+
 
 class BundleOfferRepository:
     def __init__(self, session: AsyncSession):

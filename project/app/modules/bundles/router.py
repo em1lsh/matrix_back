@@ -20,6 +20,7 @@ from .use_cases import (
     CreateBundleOfferUseCase,
     CreateBundleUseCase,
     ListBundlesUseCase,
+    ListUserBundlesUseCase,
 )
 
 
@@ -43,6 +44,21 @@ async def list_bundles(
     """
     use_case = ListBundlesUseCase(session)
     return await use_case.execute(request)
+
+
+@router.post("/my", response_model=BundlesListResponse)
+async def list_my_bundles(
+    request: BundleFilter,
+    session: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Получить список бандлов, созданных текущим пользователем.
+
+    Структура ответа соответствует /bundles/list, но возвращаются только бандлы продавца.
+    """
+    use_case = ListUserBundlesUseCase(session)
+    return await use_case.execute(current_user.id, request)
 
 
 @router.post("/create", response_model=BundleResponse)
