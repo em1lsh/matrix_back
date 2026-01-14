@@ -43,6 +43,16 @@ class ListBundlesUseCase:
         return BundleService.to_list_response(items, total, filter.limit, filter.offset)
 
 
+class ListUserBundlesUseCase:
+    def __init__(self, session: AsyncSession):
+        self.repo = BundleRepository(session)
+        self.session = session
+
+    async def execute(self, user_id: int, filter: BundleFilter) -> BundlesListResponse:
+        items, total = await self.repo.list_user_bundles(user_id, filter)
+        return BundleService.to_list_response(items, total, filter.limit, filter.offset)
+
+
 class CreateBundleUseCase:
     def __init__(self, session: AsyncSession):
         self.session = session
