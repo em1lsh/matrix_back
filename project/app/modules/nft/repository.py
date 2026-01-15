@@ -2,7 +2,7 @@
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import aliased, joinedload
 
 from app.api.schemas.base import PaginationRequest
 from app.db.models import NFT, NFTDeal, Gift, PromotedNFT
@@ -104,14 +104,18 @@ class NFTRepository(BaseRepository[NFT]):
         offset = filter.page * filter.count
 
         # Data
-        promoted_exists = (
-            select(PromotedNFT.id)
-            .where(PromotedNFT.nft_id == NFT.id, PromotedNFT.is_active.is_(True))
-            .exists()
-        )
+        promoted_alias = aliased(PromotedNFT)
         query = (
-            select(NFT, promoted_exists.label("is_promoted"))
+            select(
+                NFT,
+                promoted_alias.id.is_not(None).label("is_promoted"),
+                promoted_alias.ends_at.label("promoted_ends_at"),
+            )
             .join(Gift, NFT.gift_id == Gift.id)
+            .outerjoin(
+                promoted_alias,
+                (promoted_alias.nft_id == NFT.id) & (promoted_alias.is_active.is_(True)),
+            )
             .where(*conditions)
             .options(joinedload(NFT.gift))
             .offset(offset)
@@ -120,8 +124,9 @@ class NFTRepository(BaseRepository[NFT]):
         )
         result = await self.session.execute(query)
         items: list[NFT] = []
-        for nft, is_promoted in result.all():
+        for nft, is_promoted, promoted_ends_at_value in result.all():
             nft.is_promoted = bool(is_promoted)
+            nft.promoted_ends_at = promoted_ends_at_value
             items.append(nft)
 
         return items, total
