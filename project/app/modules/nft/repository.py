@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
 from app.api.schemas.base import PaginationRequest
-from app.db.models import NFT, NFTDeal, Gift
+from app.db.models import NFT, NFTDeal, Gift, PromotedNFT
 from app.shared.base_repository import BaseRepository
 
 from .schemas import MyNFTFilter
@@ -104,8 +104,13 @@ class NFTRepository(BaseRepository[NFT]):
         offset = filter.page * filter.count
 
         # Data
+        promoted_exists = (
+            select(PromotedNFT.id)
+            .where(PromotedNFT.nft_id == NFT.id, PromotedNFT.is_active.is_(True))
+            .exists()
+        )
         query = (
-            select(NFT)
+            select(NFT, promoted_exists.label("is_promoted"))
             .join(Gift, NFT.gift_id == Gift.id)
             .where(*conditions)
             .options(joinedload(NFT.gift))
@@ -114,7 +119,10 @@ class NFTRepository(BaseRepository[NFT]):
             .order_by(order_by)
         )
         result = await self.session.execute(query)
-        items = list(result.unique().scalars().all())
+        items: list[NFT] = []
+        for nft, is_promoted in result.all():
+            nft.is_promoted = bool(is_promoted)
+            items.append(nft)
 
         return items, total
 

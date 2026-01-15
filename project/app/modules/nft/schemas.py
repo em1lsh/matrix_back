@@ -82,6 +82,7 @@ class NFTResponse(BaseModel):
     id: int = Field(description="ID NFT")
     gift: GiftResponse = Field(description="Подарок")
     price: float | None = Field(None, ge=0, description="Цена в TON")
+    is_promoted: bool = Field(False, description="Активно ли продвижение NFT")
     active_bundle_id: int | None = Field(None, description="ID активного бандла (если NFT в бандле)")
     created_at: datetime = Field(description="Дата создания")
 
