@@ -1,7 +1,7 @@
 """Схемы для модуля stars"""
 
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 import re
 
 from pydantic import BaseModel, Field, field_validator
@@ -158,3 +158,9 @@ class BuyPremiumResponse(BaseModel):
                 "created_at": "2025-12-26T14:15:22Z"
             }
         }
+
+
+class FragmentUserInfoResponse(BaseModel):
+    """Ответ с информацией о пользователе из Fragment"""
+    username: str = Field(..., description="Telegram username (без @)")
+    data: dict[str, Any] = Field(..., description="Данные пользователя от Fragment API")
