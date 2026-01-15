@@ -1,8 +1,8 @@
 """NFT модуль - Repository"""
 
-from sqlalchemy import func, select
+from sqlalchemy import exists, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import aliased, joinedload
+from sqlalchemy.orm import joinedload
 
 from app.api.schemas.base import PaginationRequest
 from app.db.models import NFT, NFTDeal, Gift, PromotedNFT
@@ -104,18 +104,27 @@ class NFTRepository(BaseRepository[NFT]):
         offset = filter.page * filter.count
 
         # Data
-        promoted_alias = aliased(PromotedNFT)
+        is_promoted_expr = exists().where(
+            PromotedNFT.nft_id == NFT.id,
+            PromotedNFT.is_active.is_(True),
+        )
+        promoted_ends_at_expr = (
+            select(PromotedNFT.ends_at)
+            .where(
+                PromotedNFT.nft_id == NFT.id,
+                PromotedNFT.is_active.is_(True),
+            )
+            .order_by(PromotedNFT.ends_at.desc())
+            .limit(1)
+            .scalar_subquery()
+        )
         query = (
             select(
                 NFT,
-                promoted_alias.id.is_not(None).label("is_promoted"),
-                promoted_alias.ends_at.label("promoted_ends_at"),
+                is_promoted_expr.label("is_promoted"),
+                promoted_ends_at_expr.label("promoted_ends_at"),
             )
             .join(Gift, NFT.gift_id == Gift.id)
-            .outerjoin(
-                promoted_alias,
-                (promoted_alias.nft_id == NFT.id) & (promoted_alias.is_active.is_(True)),
-            )
             .where(*conditions)
             .options(joinedload(NFT.gift))
             .offset(offset)
