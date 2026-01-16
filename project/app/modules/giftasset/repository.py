@@ -19,6 +19,7 @@ from app.db.models.giftasset import (
     GiftAssetMetadata,
     GiftAssetUpdateStat
 )
+from app.modules.giftasset.service import gift_asset_service
 from app.utils.logger import logger
 
 
@@ -131,6 +132,12 @@ class GiftAssetRepository:
             await self.session.rollback()
             logger.error(f"Failed to update price list: {e}")
             raise
+
+    async def get_gifts_price_list_history(self, collection_name: str) -> Dict[str, Any]:
+        """Получить историю цен подарков из API без сохранения в БД"""
+        return await gift_asset_service.get_gifts_price_list_history(
+            collection_name=collection_name
+        )
     
     # Volumes методы
     async def get_collections_volumes(self) -> Dict[str, Any]:

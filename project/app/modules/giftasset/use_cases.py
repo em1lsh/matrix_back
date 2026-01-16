@@ -56,6 +56,39 @@ class GiftAssetUseCases:
             await self.repository.update_endpoint_stat("get_gifts_price_list", "error", str(e))
             logger.error(f"Failed to get gifts price list: {e}")
             raise GiftAssetCacheException(f"Failed to get price list: {str(e)}")
+
+    async def get_gifts_price_list_history(self, collection_name: str) -> Dict[str, Any]:
+        """Получить историю цен подарков"""
+        try:
+            api_data = await self.repository.get_gifts_price_list_history(
+                collection_name=collection_name
+            )
+            await self.repository.update_endpoint_stat(
+                "get_gifts_price_list_history",
+                "success",
+                frequency_minutes=0
+            )
+            return api_data
+
+        except GiftAssetAPIException as e:
+            await self.repository.update_endpoint_stat(
+                "get_gifts_price_list_history",
+                "error",
+                str(e),
+                frequency_minutes=0
+            )
+            logger.warning(f"Gift Asset API error: {e}")
+            raise
+
+        except Exception as e:
+            await self.repository.update_endpoint_stat(
+                "get_gifts_price_list_history",
+                "error",
+                str(e),
+                frequency_minutes=0
+            )
+            logger.error(f"Failed to get gifts price list history: {e}")
+            raise GiftAssetAPIException(f"Failed to get gifts price list history: {str(e)}")
     
     async def get_collections_volumes(self, force_refresh: bool = False) -> Dict[str, Any]:
         """Получить объемы продаж коллекций"""
