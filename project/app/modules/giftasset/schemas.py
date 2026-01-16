@@ -2,7 +2,7 @@
 Gift Asset API схемы ответов
 """
 from datetime import datetime, date
-from typing import List, Dict, Optional, Any, Union
+from typing import List, Dict, Optional, Any
 from pydantic import BaseModel, Field
 
 
@@ -180,7 +180,7 @@ class SalesHistoryItem(BaseModel):
     collection_name: str = Field(..., description="Collection name")
     price: float = Field(..., description="Sale price")
     provider: str = Field(..., description="Provider name")
-    telegram_gift_id: Union[str, int] = Field(..., description="Telegram gift ID")
+    telegram_gift_id: int = Field(..., description="Telegram gift ID")
     telegram_gift_name: str = Field(..., description="Telegram gift name")
     telegram_gift_number: int = Field(..., description="Telegram gift number")
     unix_time: int = Field(..., description="Unix timestamp")

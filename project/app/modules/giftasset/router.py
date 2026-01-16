@@ -1,12 +1,12 @@
 """
 Gift Asset API роутеры
 """
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, Query, Path
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db
-from app.api.auth import get_current_user_optional
+from app.api.auth import get_current_user, get_current_user_optional
 from app.modules.giftasset.use_cases import GiftAssetUseCases
 from app.modules.giftasset.schemas import (
     GiftAssetPriceListResponse,
@@ -60,6 +60,17 @@ async def refresh_gifts_price_list(
     """
     use_cases = GiftAssetUseCases(session)
     result = await use_cases.refresh_price_list(models=models, premarket=premarket)
+    return result
+
+
+@router.get("/price-list-history", response_model=Dict[str, Any])
+async def get_gifts_price_list_history(
+    session: AsyncSession = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
+    """Получить историю цен подарков напрямую из API"""
+    use_cases = GiftAssetUseCases(session)
+    result = await use_cases.get_gifts_price_list_history()
     return result
 
 

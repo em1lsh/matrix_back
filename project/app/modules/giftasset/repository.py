@@ -19,6 +19,7 @@ from app.db.models.giftasset import (
     GiftAssetMetadata,
     GiftAssetUpdateStat
 )
+from app.modules.giftasset.service import gift_asset_service
 from app.utils.logger import logger
 
 
@@ -70,6 +71,10 @@ class GiftAssetRepository:
             response["models_prices"] = models_prices
             
         return response
+
+    async def get_gifts_price_list_history(self) -> Dict[str, Any]:
+        """Получить историю цен из API без записи в БД"""
+        return await gift_asset_service.get_gifts_price_list_history()
     
     async def update_price_list(self, price_data: Dict[str, Any]):
         """Обновить список цен в кеше"""
@@ -547,7 +552,7 @@ class GiftAssetRepository:
                     collection_name=sale["collection_name"],
                     provider=sale["provider"],
                     price=sale["price"],
-                    telegram_gift_id=str(sale["telegram_gift_id"]),
+                    telegram_gift_id=int(sale["telegram_gift_id"]),
                     telegram_gift_name=sale["telegram_gift_name"],
                     telegram_gift_number=sale["telegram_gift_number"],
                     unix_time=sale["unix_time"],

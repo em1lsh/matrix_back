@@ -2,6 +2,7 @@
 Gift Asset use cases
 """
 from datetime import datetime, timedelta
+import json
 from typing import Dict, List, Optional, Any
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,6 +13,7 @@ from app.modules.giftasset.exceptions import (
     GiftAssetAPIException,
     GiftAssetCacheException
 )
+from app.utils.cache import build_cache_key, get_cached, set_cached
 from app.utils.logger import logger
 
 
@@ -56,6 +58,28 @@ class GiftAssetUseCases:
             await self.repository.update_endpoint_stat("get_gifts_price_list", "error", str(e))
             logger.error(f"Failed to get gifts price list: {e}")
             raise GiftAssetCacheException(f"Failed to get price list: {str(e)}")
+
+    async def get_gifts_price_list_history(self) -> Dict[str, Any]:
+        """Получить историю цен подарков"""
+        cache_key = build_cache_key("giftasset:price_list_history")
+        cached = await get_cached(cache_key)
+        if cached:
+            try:
+                cached_value = cached.decode() if isinstance(cached, (bytes, bytearray)) else cached
+                return json.loads(cached_value)
+            except Exception as e:
+                logger.warning(f"Failed to decode cached price list history: {e}")
+
+        try:
+            data = await self.repository.get_gifts_price_list_history()
+            await set_cached(cache_key, json.dumps(data), expire=300)
+            return data
+        except GiftAssetAPIException as e:
+            logger.warning(f"Gift Asset API error while fetching price list history: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"Failed to get gifts price list history: {e}")
+            raise GiftAssetCacheException(f"Failed to get price list history: {str(e)}")
     
     async def get_collections_volumes(self, force_refresh: bool = False) -> Dict[str, Any]:
         """Получить объемы продаж коллекций"""
