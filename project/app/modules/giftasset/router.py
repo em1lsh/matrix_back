@@ -10,6 +10,7 @@ from app.api.auth import get_current_user_optional
 from app.modules.giftasset.use_cases import GiftAssetUseCases
 from app.modules.giftasset.schemas import (
     GiftAssetPriceListResponse,
+    GiftsPriceListHistoryResponse,
     CollectionsVolumesResponse,
     CollectionsEmissionResponse,
     CollectionsHealthIndexResponse,
@@ -60,6 +61,20 @@ async def refresh_gifts_price_list(
     """
     use_cases = GiftAssetUseCases(session)
     result = await use_cases.refresh_price_list(models=models, premarket=premarket)
+    return result
+
+
+@router.get("/get_gifts_price_list_history", response_model=GiftsPriceListHistoryResponse)
+async def get_gifts_price_list_history(
+    collection_name: str = Query(..., description="Collection name"),
+    session: AsyncSession = Depends(get_db),
+    current_user = Depends(get_current_user_optional)
+):
+    """
+    Получить историю цен подарков по коллекции
+    """
+    use_cases = GiftAssetUseCases(session)
+    result = await use_cases.get_gifts_price_list_history(collection_name=collection_name)
     return result
 
 

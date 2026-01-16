@@ -3,7 +3,7 @@ Gift Asset API схемы ответов
 """
 from datetime import datetime, date
 from typing import List, Dict, Optional, Any, Union
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 
 
 class CollectionFloorResponse(BaseModel):
@@ -30,6 +30,17 @@ class GiftAssetPriceListResponse(BaseModel):
     """Ответ API со списком цен"""
     collection_floors: Dict[str, CollectionFloorResponse] = Field(..., description="Collection floor prices")
     models_prices: Optional[List[ModelPriceResponse]] = Field(None, description="Model prices (if requested)")
+
+
+class GiftPriceHistoryEntry(BaseModel):
+    """Запись истории цен подарка"""
+    current_price: float = Field(..., description="Current price")
+    hourly_24h: Dict[str, float] = Field(..., alias="24h", description="Hourly price history for 24 hours")
+    daily_7d: Dict[str, float] = Field(..., alias="7d", description="Daily price history for 7 days")
+
+
+class GiftsPriceListHistoryResponse(RootModel[Dict[str, Dict[str, GiftPriceHistoryEntry]]]):
+    """История цен подарков"""
 
 
 class CollectionVolumeData(BaseModel):

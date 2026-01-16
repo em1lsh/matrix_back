@@ -110,9 +110,14 @@ class GiftAssetAPIService:
         """Получить рыночную капитализацию коллекций"""
         return await self._make_request("GET", "/api/v1/gifts/get_gifts_collections_marketcap")
     
-    async def get_gifts_price_list_history(self) -> Dict[str, Any]:
+    async def get_gifts_price_list_history(self, collection_name: str) -> Dict[str, Any]:
         """Получить историю цен"""
-        return await self._make_request("GET", "/api/v1/gifts/get_gifts_price_list_history")
+        params = {"collection_name": collection_name}
+        return await self._make_request(
+            "GET",
+            "/api/v1/gifts/get_gifts_price_list_history",
+            params=params
+        )
     
     async def get_providers_volumes(self) -> Dict[str, Any]:
         """Получить объемы продаж провайдеров
