@@ -3,7 +3,7 @@
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 
 from app.utils.logger import get_logger
-from app.modules.unified.schemas import GiftResponse, MarketInfo, SalingItem, UnifiedResponse
+from app.modules.unified.schemas import GiftAttributeResponse, GiftResponse, MarketInfo, SalingItem, UnifiedResponse
 
 from .schemas import AggregatorFilter, AggregatorItem
 from .service import AggregatorService
@@ -40,18 +40,26 @@ class GetAggregatorFeedUseCase:
         symbol_attr = attributes.symbol if attributes else None
         backdrop_attr = attributes.backdrop if attributes else None
 
+        image, animation = _extract_media_urls(item.photo_url)
+        model_rarity = _parse_percent(model_attr.rarity if model_attr else None)
+        symbol_rarity = _parse_percent(symbol_attr.rarity if symbol_attr else None)
+        backdrop_rarity = _parse_percent(backdrop_attr.rarity if backdrop_attr else None)
+
         gift = GiftResponse(
             id=None,
-            image=item.photo_url or "",
-            animation=None,
+            image=image,
+            animation=animation,
             num=item.number,
             title=item.title,
             model_name=model_attr.value if model_attr else None,
             pattern_name=symbol_attr.value if symbol_attr else None,
             backdrop_name=backdrop_attr.value if backdrop_attr else None,
-            model_rarity=_parse_percent(model_attr.rarity if model_attr else None),
-            pattern_rarity=_parse_percent(symbol_attr.rarity if symbol_attr else None),
-            backdrop_rarity=_parse_percent(backdrop_attr.rarity if backdrop_attr else None),
+            model_rarity=model_rarity,
+            pattern_rarity=symbol_rarity,
+            backdrop_rarity=backdrop_rarity,
+            model=_build_attribute(model_attr.value if model_attr else None, model_rarity),
+            symbol=_build_attribute(symbol_attr.value if symbol_attr else None, symbol_rarity),
+            backdrop=_build_attribute(backdrop_attr.value if backdrop_attr else None, backdrop_rarity),
         )
 
         return SalingItem(
@@ -81,6 +89,22 @@ def _parse_percent(value: str | None) -> float | None:
     except ValueError:
         logger.warning("Invalid percent value: %s", value)
         return None
+
+
+def _extract_media_urls(photo_url: str | None) -> tuple[str, str | None]:
+    if not photo_url:
+        return "", None
+    if ".tgs" in photo_url:
+        return photo_url.replace(".tgs", ".webp"), photo_url
+    if ".webp" in photo_url:
+        return photo_url, photo_url.replace(".webp", ".tgs")
+    return photo_url, None
+
+
+def _build_attribute(value: str | None, rarity: float | None) -> GiftAttributeResponse | None:
+    if value is None and rarity is None:
+        return None
+    return GiftAttributeResponse(value=value, rarity=rarity)
 
 
 def _ton_to_nanotons(price: float | int | None) -> int:
