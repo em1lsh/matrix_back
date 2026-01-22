@@ -55,6 +55,13 @@ class AggregatorItem(BaseModel):
     attributes: AggregatorAttributes | None = None
     options: AggregatorOptions | None = None
 
+    @field_validator("giftId", mode="before")
+    @classmethod
+    def coerce_gift_id(cls, v: str | int | float | None) -> str | None:
+        if v is None:
+            return None
+        return str(v)
+
 
 class AggregatorResponse(BaseModel):
     total: int = 0
