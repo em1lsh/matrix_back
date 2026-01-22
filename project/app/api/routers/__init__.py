@@ -16,6 +16,7 @@ from app.modules.users.router import router as users_router
 from app.modules.giftasset.router import router as giftasset_router
 from app.modules.bundles.router import router as bundles_router
 from app.modules.buy_orders.router import router as buy_orders_router
+from app.modules.aggregator.router import router as aggregator_router
 
 # Старые служебные роутеры (системные)
 from .admin import admin_router
@@ -47,3 +48,4 @@ def add_routers(app: FastAPI):
     app.include_router(giftasset_router)
     app.include_router(bundles_router)
     app.include_router(buy_orders_router)
+    app.include_router(aggregator_router)

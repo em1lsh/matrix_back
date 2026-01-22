@@ -71,6 +71,13 @@ class Settings(BaseSettings):
     fragment_api_key: str = Field(default="", validation_alias="FRAGMENT_API_KEY")
     stars_markup_percent: int = Field(default=10, validation_alias="STARS_MARKUP_PERCENT")
 
+    # Swiftgifts Aggregator API settings
+    swiftgifts_api_key: str = Field(default="", validation_alias="SWIFTGIFTS_API_KEY")
+    swiftgifts_api_url: str = Field(
+        default="https://api-swiftgifts.vercel.app",
+        validation_alias="SWIFTGIFTS_API_URL",
+    )
+
     model_config = SettingsConfigDict(env_file=None)
 
     def get_channel_url(self) -> str:
