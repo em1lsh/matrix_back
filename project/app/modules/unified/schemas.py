@@ -4,6 +4,12 @@ import typing
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 
+class GiftAttributeResponse(BaseModel):
+    """Атрибут подарка (model/symbol/backdrop)"""
+    value: str | None = None
+    rarity: float | None = None
+
+
 class GiftResponse(BaseModel):
     """Подарок"""
     id: int | None = None
@@ -17,10 +23,24 @@ class GiftResponse(BaseModel):
     model_rarity: float | None = None
     pattern_rarity: float | None = None
     backdrop_rarity: float | None = None
+    model: GiftAttributeResponse | None = None
+    symbol: GiftAttributeResponse | None = None
+    backdrop: GiftAttributeResponse | None = None
     center_color: str = ""
     edge_color: str = ""
     pattern_color: str = ""
     text_color: str = ""
+
+    @model_validator(mode="after")
+    def populate_attribute_objects(self) -> "GiftResponse":
+        """Заполняем объектные атрибуты на основе плоских полей."""
+        if self.model is None and (self.model_name or self.model_rarity is not None):
+            self.model = GiftAttributeResponse(value=self.model_name, rarity=self.model_rarity)
+        if self.symbol is None and (self.pattern_name or self.pattern_rarity is not None):
+            self.symbol = GiftAttributeResponse(value=self.pattern_name, rarity=self.pattern_rarity)
+        if self.backdrop is None and (self.backdrop_name or self.backdrop_rarity is not None):
+            self.backdrop = GiftAttributeResponse(value=self.backdrop_name, rarity=self.backdrop_rarity)
+        return self
 
 
 class MarketInfo(BaseModel):
