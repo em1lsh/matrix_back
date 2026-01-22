@@ -49,9 +49,10 @@ class FragmentIntegration:
         return self.auth_token
 
     async def _make_request(
-        self, 
-        method: str, 
-        url: str, 
+        self,
+        method: str,
+        url: str,
+        expect_json: bool = True,
         **kwargs
     ) -> Dict[str, Any]:
         """Выполнить HTTP запрос к Fragment API"""
@@ -103,6 +104,23 @@ class FragmentIntegration:
                     else:
                         raise FragmentAPIError(f"Fragment API error: {response.status} - {error_text}")
                 
+                if not expect_json:
+                    return {"text": await response.text()}
+
+                content_type = response.headers.get("Content-Type", "")
+                if "application/json" not in content_type:
+                    error_text = await response.text()
+                    self.logger.error(
+                        "Fragment API unexpected content type",
+                        extra={
+                            "content_type": content_type,
+                            "body_preview": error_text[:200]
+                        }
+                    )
+                    raise FragmentAPIError(
+                        f"Unexpected response content-type: {content_type}. Body preview: {error_text[:200]}"
+                    )
+
                 return await response.json()
 
     async def get_stars_price(self, stars_amount: int) -> Dict[str, Any]:
@@ -319,6 +337,47 @@ class FragmentIntegration:
                 extra={
                     "recipient": username,
                     "months": months,
+                    "error": str(e)
+                }
+            )
+            raise
+
+    async def get_user_info(self, username: str) -> Dict[str, Any]:
+        """
+        Получить информацию о пользователе через Fragment API.
+        
+        GET https://api.fragment-api.com/v1/misc/user/{username}/
+        
+        Args:
+            username: Telegram username (без @)
+            
+        Returns:
+            Dict с информацией о пользователе
+        """
+        if username.startswith("@"):
+            username = username[1:]
+        
+        try:
+            response = await self._make_request(
+                method="GET",
+                url=f"{self.base_url}/misc/user/{username}/"
+            )
+            
+            self.logger.info(
+                "Fragment user info received",
+                extra={
+                    "username": username,
+                    "response": response
+                }
+            )
+            
+            return response
+            
+        except Exception as e:
+            self.logger.error(
+                "Error getting Fragment user info",
+                extra={
+                    "username": username,
                     "error": str(e)
                 }
             )

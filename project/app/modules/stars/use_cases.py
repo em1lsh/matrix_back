@@ -336,3 +336,16 @@ class BuyPremiumUseCase:
                     raise
                 from .exceptions import FragmentAPIError
                 raise FragmentAPIError(str(e))
+
+
+class GetFragmentUserInfoUseCase:
+    """UseCase: Получить информацию о пользователе через Fragment"""
+
+    def __init__(self, session: AsyncSession):
+        self.service = StarsService()
+
+    async def execute(self, username: str) -> FragmentUserInfoResponse:
+        """Получить информацию о пользователе из Fragment API"""
+        normalized_username = self.service.validate_username(username)
+        user_info = await self.service.get_fragment_user_info(normalized_username)
+        return FragmentUserInfoResponse(username=normalized_username, data=user_info)
